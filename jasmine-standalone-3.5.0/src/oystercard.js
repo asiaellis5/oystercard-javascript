@@ -14,7 +14,6 @@ class OysterCard {
       throw new Error("Maximum balance exceeded");
     }
   };
-
   deductFare = () => {
     this.balance -= 3;
     return `£3 deducted, current balance: £${this.balance}`;
