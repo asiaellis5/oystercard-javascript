@@ -34,4 +34,13 @@ describe("JourneyHistory", function () {
       expect(journeyHistory.history.length).toEqual(1);
     });
   });
+
+  describe("immuteJourney", function () {
+    it("immutes the journey when passed into the array", function () {
+      journeyHistory.start("Kings Cross");
+      journeyHistory.end("Waterloo");
+      journeyHistory.history[0].entryStation = "Algate East";
+      expect(journeyHistory.history[0].entryStation).toEqual("Kings Cross");
+    });
+  });
 });
