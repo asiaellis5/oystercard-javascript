@@ -7,15 +7,28 @@ class OysterCard {
   }
 
   topUpCard = (topUpAmount) => {
-    if (this.balance + topUpAmount < this.maximumBalance) {
-      this.balance += topUpAmount;
+    if (this._exceedMaxBalance(topUpAmount)) {
+      this._addMoney(topUpAmount);
       return `£${topUpAmount} Sucessfully added, Balance = £${this.balance}`;
     } else {
       throw new Error("Maximum balance exceeded");
     }
   };
+
   deductFare = () => {
-    this.balance -= 3;
+    this._deductMoney();
     return `£3 deducted, current balance: £${this.balance}`;
+  };
+
+  _exceedMaxBalance = (topUpAmount) => {
+    return this.balance + topUpAmount < this.maximumBalance;
+  };
+
+  _addMoney = (amount) => {
+    this.balance += amount;
+  };
+
+  _deductMoney = () => {
+    this.balance -= 3;
   };
 }
