@@ -3,15 +3,27 @@ describe("JourneyHistory", function () {
   let journey;
 
   beforeEach(function () {
-    journey = jasmine.createSpyObj("Journey", ["start", "finish"]);
-    journeyHistory = new JourneyHistory(journey);
+    journeyHistory = new JourneyHistory();
   });
 
-  // describe("start", function () {
-  //   it("logs the start of the current journey", function () {
-  //     journeyHistory.start("Kings Cross");
-  //     console.log(journeyHistory.start("Kings Cross"));
-  //     expect(journey.start()).toHaveBeenCalled();
+  describe("start", function () {
+    it("logs the start of the current journey", function () {
+      journeyHistory.start("Kings Cross");
+      expect(journeyHistory.currentJourney.entryStation).toEqual("Kings Cross");
+    });
+  });
+
+  describe("end", function () {
+    it("logs the end of the current journey", function () {
+      journeyHistory.end("Waterloo");
+      expect(journeyHistory.currentJourney.exitStation).toEqual("Waterloo");
+    });
+  });
+
+  // describe("resetCurrentJourney", function () {
+  //   it("resets the current journey once complete", function () {
+  //     journeyHistory.resetCurrentJourney();
+  //     expect(journeyHistory.currentJourney.entryStation).toEqual("");
   //   });
   // });
 });
