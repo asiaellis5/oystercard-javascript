@@ -2,9 +2,19 @@
 
 describe("OysterCard", function () {
   let oysterCard;
+  let stationOne;
+  let stationTwo;
 
   beforeEach(function () {
     oysterCard = new OysterCard();
+    stationOne = {
+      name: "Kings Cross",
+      zone: 2,
+    };
+    stationTwo = {
+      name: "Waterloo",
+      zone: 1,
+    };
   });
 
   describe("balance", function () {
@@ -56,21 +66,22 @@ describe("OysterCard", function () {
 
     it("returns the touch in station", function () {
       oysterCard.topUpCard(10);
-      expect(oysterCard.touchIn("kings cross")).toEqual(
-        "Journey started, you touched in at kings cross"
+      console.log(stationOne);
+      expect(oysterCard.touchIn(stationOne)).toEqual(
+        "Journey started, you touched in at Kings Cross"
       );
     });
 
     it("doesnt allow a journey to start if the card has no money on", function () {
       expect(function () {
-        oysterCard.touchIn("kings cross");
+        oysterCard.touchIn(stationOne);
       }).toThrowError("Insufficient funds, please top up");
     });
 
     it("deducts a penalty fare if the card hasnt been touched out", function () {
       oysterCard.topUpCard(10);
-      oysterCard.touchIn("Kings Cross");
-      oysterCard.touchIn("Waterloo");
+      oysterCard.touchIn(stationOne);
+      oysterCard.touchIn(stationTwo);
       expect(oysterCard.balance).toEqual(5);
     });
   });
@@ -78,28 +89,28 @@ describe("OysterCard", function () {
   describe("touchOut", function () {
     it("changes isInJourney to be false", function () {
       oysterCard.topUpCard(10);
-      oysterCard.touchIn("station");
-      oysterCard.touchOut("station");
+      oysterCard.touchIn(stationOne);
+      oysterCard.touchOut(stationTwo);
       expect(oysterCard.isInJourney).toBe(false);
     });
     it("returns the touch out station", function () {
       oysterCard.topUpCard(10);
-      oysterCard.touchIn("waterloo");
-      expect(oysterCard.touchOut("bank")).toEqual(
-        "Journey ended, you touched out at bank, current balance: £7"
+      oysterCard.touchIn(stationOne);
+      expect(oysterCard.touchOut(stationTwo)).toEqual(
+        "Journey ended, you touched out at Waterloo, current balance: £7"
       );
     });
 
     it("deducts a fare on touch out", function () {
       oysterCard.topUpCard(10);
-      oysterCard.touchIn("waterloo");
-      oysterCard.touchOut("bank");
+      oysterCard.touchIn(stationOne);
+      oysterCard.touchOut(stationTwo);
       expect(oysterCard.balance).toEqual(7);
     });
 
     it("takes off a penalty fare if try and touch out with out touching in", function () {
       oysterCard.topUpCard(10);
-      oysterCard.touchOut("Waterloo");
+      oysterCard.touchOut(stationTwo);
       expect(oysterCard.balance).toEqual(5);
     });
   });

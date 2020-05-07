@@ -3,4 +3,8 @@ class Station {
     this.name = name;
     this.zone = zone;
   }
+
+  stationName = () => {
+    return this.name;
+  };
 }
