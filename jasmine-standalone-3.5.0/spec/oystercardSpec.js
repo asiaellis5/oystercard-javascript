@@ -66,6 +66,12 @@ describe("OysterCard", function () {
         oysterCard.touchIn("kings cross");
       }).toThrowError("Insufficient funds, please top up");
     });
+
+    it("saves the entry station so know where journey started", function () {
+      oysterCard.topUpCard(10);
+      oysterCard.touchIn("Waterloo");
+      expect(oysterCard.entryStation).toEqual("Waterloo");
+    });
   });
 
   describe("touchOut", function () {

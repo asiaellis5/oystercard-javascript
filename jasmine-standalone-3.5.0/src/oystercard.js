@@ -6,6 +6,7 @@ class OysterCard {
     this.maximumBalance = 90;
     this.minimumFare = 3;
     this.isInJourney = false;
+    this.entryStation = "";
   }
 
   topUpCard = (topUpAmount) => {
@@ -20,6 +21,7 @@ class OysterCard {
   touchIn = (station) => {
     if (this.balance > this.minimumFare) {
       this.isInJourney = true;
+      this.entryStation = station;
       return `Journey started, you touched in at ${station}`;
     } else {
       throw new Error("Insufficient funds, please top up");
@@ -27,8 +29,8 @@ class OysterCard {
   };
 
   touchOut = (station) => {
-    this.isInJourney = false;
     this._deductFare();
+    this.isInJourney = false;
     return `Journey ended, you touched out at ${station}, current balance: £${this.balance}`;
   };
 
