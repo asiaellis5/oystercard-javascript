@@ -53,4 +53,17 @@ describe("OysterCard", function () {
       );
     });
   });
+
+  describe("touchIn", function () {
+    it("changes inJourney to be true", function () {
+      oysterCard.touchIn("station");
+      expect(oysterCard.isInJourney).toBe(true);
+    });
+
+    it("returns the touch in station", function () {
+      expect(oysterCard.touchIn("kings cross")).toEqual(
+        "Journey started you touched in at kings cross"
+      );
+    });
+  });
 });

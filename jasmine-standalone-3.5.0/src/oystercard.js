@@ -4,6 +4,7 @@ class OysterCard {
   constructor() {
     this.balance = 0;
     this.maximumBalance = 90;
+    this.isInJourney = false;
   }
 
   topUpCard = (topUpAmount) => {
@@ -18,6 +19,11 @@ class OysterCard {
   deductFare = () => {
     this._deductMoney();
     return `£3 deducted, current balance: £${this.balance}`;
+  };
+
+  touchIn = (station) => {
+    this.isInJourney = true;
+    return `Journey started you touched in at ${station}`;
   };
 
   _exceedMaxBalance = (topUpAmount) => {
