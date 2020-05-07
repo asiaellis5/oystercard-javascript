@@ -66,6 +66,13 @@ describe("OysterCard", function () {
         oysterCard.touchIn("kings cross");
       }).toThrowError("Insufficient funds, please top up");
     });
+
+    it("deducts a penalty fare if the card hasnt been touched out", function () {
+      oysterCard.topUpCard(10);
+      oysterCard.touchIn("Kings Cross");
+      oysterCard.touchIn("Waterloo");
+      expect(oysterCard.balance).toEqual(5);
+    });
   });
 
   describe("touchOut", function () {
@@ -88,6 +95,12 @@ describe("OysterCard", function () {
       oysterCard.touchIn("waterloo");
       oysterCard.touchOut("bank");
       expect(oysterCard.balance).toEqual(7);
+    });
+
+    it("takes off a penalty fare if try and touch out with out touching in", function () {
+      oysterCard.topUpCard(10);
+      oysterCard.touchOut("Waterloo");
+      expect(oysterCard.balance).toEqual(5);
     });
   });
 });

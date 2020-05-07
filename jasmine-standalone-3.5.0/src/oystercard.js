@@ -7,6 +7,7 @@ class OysterCard {
     this.minimumFare = 3;
     this.isInJourney = false;
     this.journeyHistory = journeyHistory;
+    this.penaltyFare = 5;
   }
 
   topUpCard = (topUpAmount) => {
@@ -19,6 +20,11 @@ class OysterCard {
   };
 
   touchIn = (station) => {
+    if (this.isInJourney) {
+      this._deductPenaltyFare();
+      this.journeyHistory.resetCurrentJourney();
+      this.isInJourney = false;
+    }
     if (this.balance > this.minimumFare) {
       this.isInJourney = true;
       this.journeyHistory.start(station);
@@ -29,10 +35,9 @@ class OysterCard {
   };
 
   touchOut = (station) => {
-    this._deductFare();
+    this.isInJourney ? this._deductFare() : this._deductPenaltyFare();
     this.isInJourney = false;
     this.journeyHistory.end(station);
-    // this.journeyHistory.resetCurrentJourney();
     return `Journey ended, you touched out at ${station}, current balance: £${this.balance}`;
   };
 
@@ -46,5 +51,9 @@ class OysterCard {
 
   _deductFare = () => {
     this.balance -= this.minimumFare;
+  };
+
+  _deductPenaltyFare = () => {
+    this.balance -= this.penaltyFare;
   };
 }
