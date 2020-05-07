@@ -1,12 +1,12 @@
 "use strict";
 
 class OysterCard {
-  constructor() {
+  constructor(journeyHistory = new JourneyHistory()) {
     this.balance = 0;
     this.maximumBalance = 90;
     this.minimumFare = 3;
     this.isInJourney = false;
-    this.journey = new Journey();
+    this.journeyHistory = journeyHistory;
   }
 
   topUpCard = (topUpAmount) => {
@@ -21,7 +21,7 @@ class OysterCard {
   touchIn = (station) => {
     if (this.balance > this.minimumFare) {
       this.isInJourney = true;
-      this.journey.entryStation = station;
+      this.journeyHistory.start(station);
       return `Journey started, you touched in at ${station}`;
     } else {
       throw new Error("Insufficient funds, please top up");
@@ -31,7 +31,7 @@ class OysterCard {
   touchOut = (station) => {
     this._deductFare();
     this.isInJourney = false;
-    this.journey.exitStation = station;
+    this.journeyHistory.end(station);
     return `Journey ended, you touched out at ${station}, current balance: £${this.balance}`;
   };
 
