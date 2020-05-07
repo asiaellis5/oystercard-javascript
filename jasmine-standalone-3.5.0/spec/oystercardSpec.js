@@ -66,12 +66,6 @@ describe("OysterCard", function () {
         oysterCard.touchIn("kings cross");
       }).toThrowError("Insufficient funds, please top up");
     });
-
-    it("saves the entry station so know where journey started", function () {
-      oysterCard.topUpCard(10);
-      oysterCard.touchIn("Waterloo");
-      expect(oysterCard.entryStation).toEqual("Waterloo");
-    });
   });
 
   describe("touchOut", function () {
@@ -94,13 +88,6 @@ describe("OysterCard", function () {
       oysterCard.touchIn("waterloo");
       oysterCard.touchOut("bank");
       expect(oysterCard.balance).toEqual(7);
-    });
-
-    it("resets the entry station to nil", function () {
-      oysterCard.topUpCard(10);
-      oysterCard.touchIn("waterloo");
-      oysterCard.touchOut("bank");
-      expect(oysterCard.entryStation).toEqual("");
     });
   });
 });
