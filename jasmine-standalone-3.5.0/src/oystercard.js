@@ -32,6 +32,7 @@ class OysterCard {
     this._deductFare();
     this.isInJourney = false;
     this.journeyHistory.end(station);
+    // this.journeyHistory.resetCurrentJourney();
     return `Journey ended, you touched out at ${station}, current balance: £${this.balance}`;
   };
 

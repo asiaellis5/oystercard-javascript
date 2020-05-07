@@ -10,5 +10,11 @@ class JourneyHistory {
 
   end = (station) => {
     this.currentJourney.end(station);
+    this.resetCurrentJourney();
+  };
+
+  resetCurrentJourney = () => {
+    this.history.push(Object.freeze(this.currentJourney));
+    this.currentJourney = new Journey();
   };
 }

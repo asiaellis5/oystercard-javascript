@@ -16,14 +16,22 @@ describe("JourneyHistory", function () {
   describe("end", function () {
     it("logs the end of the current journey", function () {
       journeyHistory.end("Waterloo");
-      expect(journeyHistory.currentJourney.exitStation).toEqual("Waterloo");
+      expect(journeyHistory.history[0].exitStation).toEqual("Waterloo");
     });
   });
 
-  // describe("resetCurrentJourney", function () {
-  //   it("resets the current journey once complete", function () {
-  //     journeyHistory.resetCurrentJourney();
-  //     expect(journeyHistory.currentJourney.entryStation).toEqual("");
-  //   });
-  // });
+  describe("resetCurrentJourney", function () {
+    it("resets the current journey once complete", function () {
+      journeyHistory.start("Kings Cross");
+      journeyHistory.end("Waterloo");
+      expect(journeyHistory.currentJourney.entryStation).toEqual("");
+      expect(journeyHistory.currentJourney.exitStation).toEqual("");
+    });
+
+    it("stores the completed journey", function () {
+      journeyHistory.start("Kings Cross");
+      journeyHistory.end("Waterloo");
+      expect(journeyHistory.history.length).toEqual(1);
+    });
+  });
 });
