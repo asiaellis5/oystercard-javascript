@@ -95,5 +95,12 @@ describe("OysterCard", function () {
       oysterCard.touchOut("bank");
       expect(oysterCard.balance).toEqual(7);
     });
+
+    it("resets the entry station to nil", function () {
+      oysterCard.topUpCard(10);
+      oysterCard.touchIn("waterloo");
+      oysterCard.touchOut("bank");
+      expect(oysterCard.entryStation).toEqual("");
+    });
   });
 });

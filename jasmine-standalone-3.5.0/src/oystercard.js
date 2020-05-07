@@ -31,6 +31,7 @@ class OysterCard {
   touchOut = (station) => {
     this._deductFare();
     this.isInJourney = false;
+    this.entryStation = "";
     return `Journey ended, you touched out at ${station}, current balance: £${this.balance}`;
   };
 
