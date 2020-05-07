@@ -39,31 +39,55 @@ describe("OysterCard", function () {
     });
   });
 
-  describe("deductFare", function () {
+  describe("_deductFare", function () {
     it("deducts the standard fare", function () {
       oysterCard.topUpCard(10);
-      oysterCard.deductFare();
+      oysterCard._deductFare();
       expect(oysterCard.balance).toEqual(7);
-    });
-
-    it("returns a statement that money has been deducted", function () {
-      oysterCard.topUpCard(10);
-      expect(oysterCard.deductFare()).toEqual(
-        "£3 deducted, current balance: £7"
-      );
     });
   });
 
   describe("touchIn", function () {
-    it("changes inJourney to be true", function () {
+    it("changes isInJourney to be true", function () {
+      oysterCard.topUpCard(10);
       oysterCard.touchIn("station");
       expect(oysterCard.isInJourney).toBe(true);
     });
 
     it("returns the touch in station", function () {
+      oysterCard.topUpCard(10);
       expect(oysterCard.touchIn("kings cross")).toEqual(
-        "Journey started you touched in at kings cross"
+        "Journey started, you touched in at kings cross"
       );
+    });
+
+    it("doesnt allow a journey to start if the card has no money on", function () {
+      expect(function () {
+        oysterCard.touchIn("kings cross");
+      }).toThrowError("Insufficient funds, please top up");
+    });
+  });
+
+  describe("touchOut", function () {
+    it("changes isInJourney to be false", function () {
+      oysterCard.topUpCard(10);
+      oysterCard.touchIn("station");
+      oysterCard.touchOut("station");
+      expect(oysterCard.isInJourney).toBe(false);
+    });
+    it("returns the touch out station", function () {
+      oysterCard.topUpCard(10);
+      oysterCard.touchIn("waterloo");
+      expect(oysterCard.touchOut("bank")).toEqual(
+        "Journey ended, you touched out at bank, current balance: £7"
+      );
+    });
+
+    it("deducts a fare on touch out", function () {
+      oysterCard.topUpCard(10);
+      oysterCard.touchIn("waterloo");
+      oysterCard.touchOut("bank");
+      expect(oysterCard.balance).toEqual(7);
     });
   });
 });

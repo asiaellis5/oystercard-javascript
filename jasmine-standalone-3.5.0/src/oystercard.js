@@ -4,6 +4,7 @@ class OysterCard {
   constructor() {
     this.balance = 0;
     this.maximumBalance = 90;
+    this.minimumFare = 3;
     this.isInJourney = false;
   }
 
@@ -16,14 +17,19 @@ class OysterCard {
     }
   };
 
-  deductFare = () => {
-    this._deductMoney();
-    return `£3 deducted, current balance: £${this.balance}`;
+  touchIn = (station) => {
+    if (this.balance > this.minimumFare) {
+      this.isInJourney = true;
+      return `Journey started, you touched in at ${station}`;
+    } else {
+      throw new Error("Insufficient funds, please top up");
+    }
   };
 
-  touchIn = (station) => {
-    this.isInJourney = true;
-    return `Journey started you touched in at ${station}`;
+  touchOut = (station) => {
+    this.isInJourney = false;
+    this._deductFare();
+    return `Journey ended, you touched out at ${station}, current balance: £${this.balance}`;
   };
 
   _exceedMaxBalance = (topUpAmount) => {
@@ -34,7 +40,7 @@ class OysterCard {
     this.balance += amount;
   };
 
-  _deductMoney = () => {
-    this.balance -= 3;
+  _deductFare = () => {
+    this.balance -= this.minimumFare;
   };
 }
