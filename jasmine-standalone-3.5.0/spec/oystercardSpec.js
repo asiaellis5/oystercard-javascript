@@ -77,7 +77,6 @@ describe("OysterCard", function () {
 
     it("returns the touch in station", function () {
       oysterCard.topUpCard(10);
-      console.log(stationOne);
       expect(oysterCard.touchIn(stationOne)).toEqual(
         "Journey started, you touched in at Kings Cross"
       );
