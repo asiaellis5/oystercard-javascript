@@ -11,7 +11,7 @@ describe("feature", function () {
     stationThree = new Station("Clapham", 6);
   });
 
-  it("touches in and out correctly and deducts the correct fare", function () {
+  it("touches in and out correctly and deducts the correct fare across two zones", function () {
     oysterCard.topUpCard(10);
     oysterCard.touchIn(stationOne);
     oysterCard.touchOut(stationTwo);
@@ -24,7 +24,7 @@ describe("feature", function () {
     expect(oysterCard.balance).toEqual(5);
   });
 
-  it("touches in and out correctly and deducts the correct fare", function () {
+  it("touches in and out correctly and deducts the correct fare across five zones", function () {
     oysterCard.topUpCard(20);
     oysterCard.touchIn(stationOne);
     oysterCard.touchOut(stationThree);
@@ -33,7 +33,7 @@ describe("feature", function () {
     expect(oysterCard.balance).toEqual(12);
   });
 
-  it("touches in and out correctly and deducts the correct fare", function () {
+  it("touches in twice and deducts the penalty fare", function () {
     oysterCard.topUpCard(20);
     oysterCard.touchIn(stationOne);
     oysterCard.touchIn(stationThree);
