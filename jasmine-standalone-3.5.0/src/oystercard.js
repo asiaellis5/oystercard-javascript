@@ -7,7 +7,7 @@ class OysterCard {
     this.minimumFare = 3;
     this.isInJourney = false;
     this.journeyHistory = journeyHistory;
-    this.penaltyFare = 5;
+    this.penaltyFare = 7;
   }
 
   topUpCard = (topUpAmount) => {

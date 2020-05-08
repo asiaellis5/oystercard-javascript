@@ -32,4 +32,20 @@ describe("feature", function () {
     expect(oysterCard.journeyHistory.history[0].exitStation.zone).toEqual(6);
     expect(oysterCard.balance).toEqual(12);
   });
+
+  it("touches in and out correctly and deducts the correct fare", function () {
+    oysterCard.topUpCard(20);
+    oysterCard.touchIn(stationOne);
+    oysterCard.touchIn(stationThree);
+    expect(oysterCard.journeyHistory.history[0].entryStation.name).toEqual(
+      "Kings Cross"
+    );
+    expect(oysterCard.journeyHistory.history[0].exitStation.name).toEqual(
+      undefined
+    );
+    expect(oysterCard.journeyHistory.currentJourney.entryStation.name).toEqual(
+      "Clapham"
+    );
+    expect(oysterCard.balance).toEqual(13);
+  });
 });

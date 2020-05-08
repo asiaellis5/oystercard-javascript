@@ -90,10 +90,10 @@ describe("OysterCard", function () {
     });
 
     it("deducts a penalty fare if the card hasnt been touched out", function () {
-      oysterCard.topUpCard(10);
+      oysterCard.topUpCard(20);
       oysterCard.touchIn(stationOne);
       oysterCard.touchIn(stationTwo);
-      expect(oysterCard.balance).toEqual(5);
+      expect(oysterCard.balance).toEqual(13);
     });
   });
 
@@ -122,7 +122,7 @@ describe("OysterCard", function () {
     it("takes off a penalty fare if try and touch out with out touching in", function () {
       oysterCard.topUpCard(10);
       oysterCard.touchOut(stationTwo);
-      expect(oysterCard.balance).toEqual(5);
+      expect(oysterCard.balance).toEqual(3);
     });
   });
 
