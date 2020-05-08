@@ -35,9 +35,10 @@ class OysterCard {
   };
 
   touchOut = (station) => {
-    this.isInJourney ? this._deductFare() : this._deductPenaltyFare();
-    this.isInJourney = false;
     this.journeyHistory.end(station);
+    this.isInJourney ? this._deductFare() : this._deductPenaltyFare();
+    this.journeyHistory.resetCurrentJourney();
+    this.isInJourney = false;
     return `Journey ended, you touched out at ${station.name}, current balance: £${this.balance}`;
   };
 
@@ -50,7 +51,10 @@ class OysterCard {
   };
 
   _deductFare = () => {
-    this.balance -= this.minimumFare;
+    let fare =
+      this.journeyHistory.currentJourney.entryStation.zone -
+      this.journeyHistory.currentJourney.exitStation.zone;
+    this.balance -= this.minimumFare + Math.abs(fare);
   };
 
   _deductPenaltyFare = () => {

@@ -10,7 +10,6 @@ class JourneyHistory {
 
   end = (station) => {
     this.currentJourney.end(station);
-    this.resetCurrentJourney();
   };
 
   resetCurrentJourney = () => {

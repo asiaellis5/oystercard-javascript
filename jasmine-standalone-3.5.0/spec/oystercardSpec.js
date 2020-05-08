@@ -4,16 +4,26 @@ describe("OysterCard", function () {
   let oysterCard;
   let stationOne;
   let stationTwo;
+  let stationThree;
+  let stationFour;
 
   beforeEach(function () {
     oysterCard = new OysterCard();
     stationOne = {
       name: "Kings Cross",
-      zone: 2,
+      zone: 1,
     };
     stationTwo = {
       name: "Waterloo",
       zone: 1,
+    };
+    stationThree = {
+      name: "Bank",
+      zone: 2,
+    };
+    stationFour = {
+      name: "Algate",
+      zone: 6,
     };
   });
 
@@ -52,7 +62,8 @@ describe("OysterCard", function () {
   describe("_deductFare", function () {
     it("deducts the standard fare", function () {
       oysterCard.topUpCard(10);
-      oysterCard._deductFare();
+      oysterCard.touchIn(stationOne);
+      oysterCard.touchOut(stationTwo);
       expect(oysterCard.balance).toEqual(7);
     });
   });
@@ -112,6 +123,22 @@ describe("OysterCard", function () {
       oysterCard.topUpCard(10);
       oysterCard.touchOut(stationTwo);
       expect(oysterCard.balance).toEqual(5);
+    });
+  });
+
+  describe("calculateFare", function () {
+    it("adds one to the fare if cross one zone", function () {
+      oysterCard.topUpCard(10);
+      oysterCard.touchIn(stationTwo);
+      oysterCard.touchOut(stationThree);
+      expect(oysterCard.balance).toEqual(6);
+    });
+
+    it("adds one to the fare if cross five zones", function () {
+      oysterCard.topUpCard(10);
+      oysterCard.touchIn(stationTwo);
+      oysterCard.touchOut(stationFour);
+      expect(oysterCard.balance).toEqual(2);
     });
   });
 });

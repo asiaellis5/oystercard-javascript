@@ -27,6 +27,7 @@ describe("JourneyHistory", function () {
   describe("end", function () {
     it("logs the end of the current journey", function () {
       journeyHistory.end(stationTwo);
+      journeyHistory.resetCurrentJourney();
       expect(journeyHistory.history[0].exitStation.name).toEqual("Waterloo");
     });
   });
@@ -35,6 +36,7 @@ describe("JourneyHistory", function () {
     it("resets the current journey once complete", function () {
       journeyHistory.start(stationOne);
       journeyHistory.end(stationTwo);
+      journeyHistory.resetCurrentJourney();
       expect(journeyHistory.currentJourney.entryStation).toEqual("");
       expect(journeyHistory.currentJourney.exitStation).toEqual("");
     });
@@ -42,6 +44,7 @@ describe("JourneyHistory", function () {
     it("stores the completed journey", function () {
       journeyHistory.start(stationOne);
       journeyHistory.end(stationTwo);
+      journeyHistory.resetCurrentJourney();
       expect(journeyHistory.history.length).toEqual(1);
     });
   });
@@ -50,6 +53,7 @@ describe("JourneyHistory", function () {
     it("immutes the journey when passed into the array", function () {
       journeyHistory.start(stationOne);
       journeyHistory.end(stationTwo);
+      journeyHistory.resetCurrentJourney();
       journeyHistory.history[0].entryStation = "Algate East";
       expect(journeyHistory.history[0].entryStation.name).toEqual(
         "Kings Cross"
