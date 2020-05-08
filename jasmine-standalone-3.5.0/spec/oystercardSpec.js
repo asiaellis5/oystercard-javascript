@@ -140,5 +140,14 @@ describe("OysterCard", function () {
       oysterCard.touchOut(stationFour);
       expect(oysterCard.balance).toEqual(2);
     });
+
+    it("adds one to the fare if cross five zones and a second trip", function () {
+      oysterCard.topUpCard(20);
+      oysterCard.touchIn(stationTwo);
+      oysterCard.touchOut(stationFour);
+      oysterCard.touchIn(stationOne);
+      oysterCard.touchOut(stationTwo);
+      expect(oysterCard.balance).toEqual(9);
+    });
   });
 });
